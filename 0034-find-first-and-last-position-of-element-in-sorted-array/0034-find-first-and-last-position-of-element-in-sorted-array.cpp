@@ -1,45 +1,28 @@
 class Solution {
 public:
-    vector<int> searchRange(vector<int>& nums, int target) 
-    {
+    vector<int> searchRange(vector<int>& nums, int target) {
         vector<int> res(2, -1); // Initialize result vector with -1, -1
 
         // Find the first occurrence of target
-        int left = 0, right = nums.size() - 1;
-        while (left <= right) 
-        {
-            int mid = left + (right - left) / 2;
-            if (nums[mid] >= target) 
-            {
-                right = mid - 1;
-            } 
-            else 
-            {
-                left = mid + 1;
+        for (int i = 0; i < nums.size(); ++i) {
+            if (nums[i] == target) {
+                res[0] = i;
+                break;
             }
         }
-        
-        if (left >= nums.size() || nums[left] != target) 
-        {
-            return res; // target not found
+
+        // If the first occurrence is not found, return [-1, -1]
+        if (res[0] == -1) {
+            return res;
         }
-        res[0] = left; // first occurrence
 
         // Find the last occurrence of target
-        right = nums.size() - 1; // reset right pointer
-        while (left <= right) 
-        {
-            int mid = left + (right - left) / 2;
-            if (nums[mid] <= target) 
-            {
-                left = mid + 1;
-            } 
-            else 
-            {
-                right = mid - 1;
+        for (int i = nums.size() - 1; i >= 0; --i) {
+            if (nums[i] == target) {
+                res[1] = i;
+                break;
             }
         }
-        res[1] = right; // last occurrence
 
         return res;
     }
